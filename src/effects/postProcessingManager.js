@@ -68,7 +68,6 @@ export class PostProcessingManager {
   resize(width, height) {
     this.composer.setSize(width, height);
 
-    // Update FXAA resolution
     if (this.fxaaPass) {
       const pixelRatio = this.renderer.getPixelRatio();
       this.fxaaPass.uniforms["resolution"].value.x = 1 / (width * pixelRatio);

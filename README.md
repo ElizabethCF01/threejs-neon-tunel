@@ -1,6 +1,6 @@
 # Neon Tunnel - Interactive 3D Experience
 
-A mesmerizing interactive 3D tunnel experience built with Three.js, featuring dynamic audio visualization, post-processing effects, and smooth camera movement through a neon-lit cyberpunk tunnel.
+An interactive 3D tunnel experience built with Three.js, featuring dynamic audio visualization, post-processing effects, and smooth camera movement through a neon-lit cyberpunk tunnel.
 
 ![Neon Tunnel](https://img.shields.io/badge/Three.js-Interactive-brightgreen)
 ![Vite](https://img.shields.io/badge/Vite-Build%20Tool-blue)
@@ -43,8 +43,8 @@ The experience features:
 1. Clone the repository:
 
 ```bash
-git clone <your-repo-url>
-cd vitejs-vite-evypwpe2
+git clone https://github.com/ElizabethCF01/threejs-neon-tunel.git
+cd threejs-neon-tunel
 ```
 
 2. Install dependencies:
@@ -133,6 +133,24 @@ public/
 - Frequency analysis with 64 FFT size
 - Smooth audio data processing
 
+## 💡 Design Decisions
+
+### Why No Traditional Lighting?
+
+This project intentionally avoids Three.js lighting systems for several key reasons:
+
+- **Neon**: The cyberpunk neon effect is achieved through emissive materials and post-processing bloom, not traditional lighting
+- **Creative Control**: Custom GLSL shaders and material properties provide more precise control over the visual appearance
+- **Glow Effects**: The characteristic neon glow is created using `UnrealBloomPass` rather than light sources
+- **Stylistic Choice**: The tunnel relies on self-illuminated materials and color cycling for visual impact
+
+Instead of lights, the project uses:
+- **Emissive Materials**: Objects that glow inherently
+- **Post-Processing Effects**: Bloom pass for realistic glow
+- **Custom Shaders**: Direct color manipulation for dynamic effects
+- **Texture-Based Illumination**: Neon textures with alpha transparency
+
+
 ## 🔧 Development
 
 ### Building for Production
@@ -169,7 +187,7 @@ Neon textures are located in `public/textures/`:
 
 - Support for PNG format with transparency
 - Recommended size: 512x512 or 1024x1024
-- Used for billboard neon signs throughout the tunnel
+- Used for neon paintings throughout the tunnel
 
 ## 🐛 Known Issues
 
@@ -177,9 +195,6 @@ Neon textures are located in `public/textures/`:
 - Performance may vary on lower-end devices
 - WebGL support required
 
-## 📝 License
-
-This project is open source and available under the [MIT License](LICENSE).
 
 ## 🤝 Contributing
 
