@@ -1,0 +1,75 @@
+html {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
+}
+
+canvas {
+  background-color: blue;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
+  z-index: -1;
+}
+
+html, body {
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+/* Estilos para el botón de mute con iconos rosa neón */
+#mute-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: none !important;
+  border: none !important;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+#mute-btn:hover {
+  background: rgba(255, 20, 147, 0.1) !important;
+  box-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
+}
+
+#mute-btn img {
+  filter: 
+    hue-rotate(300deg) 
+    saturate(2) 
+    brightness(1.5) 
+    drop-shadow(0 0 10px #ff1493) 
+    drop-shadow(0 0 20px #ff1493) 
+    drop-shadow(0 0 30px #ff1493);
+  transition: filter 0.3s ease;
+}
+
+#mute-btn:hover img {
+  filter: 
+    hue-rotate(300deg) 
+    saturate(2.5) 
+    brightness(2) 
+    drop-shadow(0 0 15px #ff1493) 
+    drop-shadow(0 0 25px #ff1493) 
+    drop-shadow(0 0 35px #ff1493);
+}
