@@ -1,4 +1,3 @@
-// Audio management and analysis
 export class AudioManager {
   constructor() {
     this.audioContext = null;
@@ -25,17 +24,13 @@ export class AudioManager {
   setupAudio() {
     this.bgMusic.volume = 1;
     this.bgMusic.muted = false;
-
-    // No crear el AudioContext hasta que haya interacción del usuario
+    // AUDIO CONTEXT
     this.setupAudioContext();
   }
 
   async setupAudioContext() {
     try {
-      // Intentar reproducir primero
       await this.bgMusic.play();
-
-      // Si no hay AudioContext, crearlo después de la reproducción exitosa
       if (!this.audioContext) {
         this.audioContext = new AudioContext();
         const sourceNode = this.audioContext.createMediaElementSource(
@@ -49,31 +44,26 @@ export class AudioManager {
         this.frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
       }
     } catch (error) {
-      console.log("Autoplay bloqueado por el navegador:", error);
-      // El usuario tendrá que hacer clic en el botón para iniciar
+      console.log("Autoplay blocked:", error);
     }
   }
 
   setupMuteButton() {
-    // estilo y estado inicial del botón
     this.muteBtn.style.background = "none";
     this.muteBtn.style.border = "none";
 
-    // Establecer el icono correcto basado en el estado inicial
     this.updateButtonIcon();
 
-    // click toggle play/mute
     this.muteBtn.addEventListener("click", async () => {
       if (this.bgMusic.paused) {
         try {
           await this.bgMusic.play();
-          // Inicializar AudioContext si no existe
           if (!this.audioContext) {
             await this.setupAudioContext();
           }
           this.updateButtonIcon();
         } catch (error) {
-          console.error("Error al reproducir audio:", error);
+          console.error("Error:", error);
         }
       } else {
         this.bgMusic.muted = !this.bgMusic.muted;
@@ -84,15 +74,12 @@ export class AudioManager {
 
   updateButtonIcon() {
     if (this.bgMusic.paused) {
-      // Si está pausado, mostrar icono de sound (play button)
       this.muteBtn.innerHTML =
         '<img src="/sound.svg" alt="Play" width="32" height="32" />';
     } else if (this.bgMusic.muted) {
-      // Si está muteado, mostrar icono de sound para des-mutear
       this.muteBtn.innerHTML =
         '<img src="/sound.svg" alt="Unmute" width="32" height="32" />';
     } else {
-      // Si está reproduciéndose, mostrar icono de muted para mutear
       this.muteBtn.innerHTML =
         '<img src="/muted.svg" alt="Mute" width="32" height="32" />';
     }

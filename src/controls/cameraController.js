@@ -1,6 +1,5 @@
 import { MathUtils } from "three";
 
-// Camera movement and scroll control
 export class CameraController {
   constructor(camera, curvePath) {
     this.camera = camera;

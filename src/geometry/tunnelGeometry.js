@@ -8,7 +8,6 @@ import {
   AdditiveBlending,
 } from "three";
 
-// Tunnel geometry and path generation
 export class TunnelGeometry {
   constructor(radius = 0.5) {
     this.radius = radius;
@@ -105,11 +104,11 @@ export class TunnelGeometry {
   }
 
   init() {
-    // Generate path points
+    // PATH POINTS
     const points = this.generateSmoothPathPoints(6);
     this.curvePath = new CatmullRomCurve3(points, true);
 
-    // Create tube geometry
+    // TUBE GEOMETRY
     const tubularSegments = 80;
     const radialSegments = 8;
     const closed = true;
@@ -122,7 +121,7 @@ export class TunnelGeometry {
       closed
     );
 
-    // Create tube lines
+    // TUBE LINES
     this.tubeLines = this.createQuadGridLines(this.tubeGeometry);
 
     return {

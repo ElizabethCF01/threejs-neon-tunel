@@ -1,4 +1,3 @@
-// radial blur fragment shader
 uniform sampler2D tDiffuse;
 uniform vec2 resolution;
 uniform vec2 center;

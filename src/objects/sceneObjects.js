@@ -14,7 +14,6 @@ import {
   DoubleSide,
 } from "three";
 
-// Scene objects management (moving objects, neon planes, particles)
 export class SceneObjects {
   constructor() {
     this.movingObjects = [];
@@ -33,7 +32,7 @@ export class SceneObjects {
     this.radius = radius;
     this.loadedTextures = loadedTextures;
 
-    // Create moving objects material
+    //MOVING OBJECTS MATERIAL
     this.movingObjMat = new MeshStandardMaterial({
       color: 0x00ffff,
       emissive: 0x00ffff,
@@ -180,18 +179,15 @@ export class SceneObjects {
   }
 
   updateColors(hue, lightness) {
-    // Update moving objects material
     this.movingObjMat.color.setHSL(hue, 1.0, 0.6);
     this.movingObjMat.emissive.setHSL(hue, 1.0, 0.6);
 
-    // Update particle material
     if (this.particleMaterial) {
       this.particleMaterial.color.setHSL(hue, 1.0, lightness);
     }
   }
 
   applyAudioEffects(midLevel) {
-    // Efecto de pulsación suave en planos de neón según frecuencias medias
     this.neonPlanes.forEach((mesh) => {
       mesh.scale.setScalar(1 + midLevel * 0.2);
     });

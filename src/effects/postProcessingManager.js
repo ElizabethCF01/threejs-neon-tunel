@@ -6,7 +6,6 @@ import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
 import { RGBShiftShader } from "three/examples/jsm/shaders/RGBShiftShader.js";
 import { Vector2 } from "three";
 
-// Post-processing effects management
 export class PostProcessingManager {
   constructor(renderer, scene, camera) {
     this.renderer = renderer;
@@ -23,24 +22,23 @@ export class PostProcessingManager {
     this.composer = new EffectComposer(this.renderer);
     this.composer.addPass(new RenderPass(this.scene, this.camera));
 
-    // bloom pass
+    // BLOOM
     this.bloomPass = new UnrealBloomPass(
       new Vector2(window.innerWidth, window.innerHeight),
-      1.3,
+      1.5,
       0.4,
-      0.1
+      0.07
     );
     this.composer.addPass(this.bloomPass);
 
-    // cache blur pass for direct updates
     this.blurPass = new ShaderPass(radialBlurShader);
     this.composer.addPass(this.blurPass);
 
-    // RGB Shift pass for aberration effect
+    // RGB SHIFT
     this.rgbShiftPass = new ShaderPass(RGBShiftShader);
     this.composer.addPass(this.rgbShiftPass);
 
-    // FXAA pass for efficient anti-aliasing (should be last)
+    // FXAA
     this.fxaaPass = new ShaderPass(FXAAShader);
     const pixelRatio = this.renderer.getPixelRatio();
     this.fxaaPass.uniforms["resolution"].value.x =

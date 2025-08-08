@@ -28,14 +28,14 @@ let camera,
   clock,
   hue = 0;
 
-// Managers and controllers
+// MANAGERS
 let audioManager;
 let postProcessingManager;
 let tunnelGeometry;
 let sceneObjects;
 let cameraController;
 
-// Scene elements
+// SCENE OBJECTS
 let tubeLines;
 let loadedTextures = [];
 
@@ -58,7 +58,7 @@ async function preloadTextures() {
 async function init() {
   await preloadTextures();
 
-  // Initialize managers
+  // MAPPERS
   audioManager = new AudioManager();
   tunnelGeometry = new TunnelGeometry();
   sceneObjects = new SceneObjects();
@@ -72,7 +72,7 @@ async function init() {
   });
   document.body.appendChild(renderer.domElement);
 
-  // Setup audio
+  // AUDIO
   await audioManager.init();
 
   const dpr = Math.min(window.devicePixelRatio, 2);
@@ -91,20 +91,20 @@ async function init() {
   // SCENE
   scene = new Scene();
   scene.background = new Color(0x000000);
-  scene.fog = new FogExp2(0x000000, 0.3);
+  scene.fog = new FogExp2(0x000000, 0.25);
 
-  // Initialize tunnel geometry
+  // TUNEL GEOMETRY
   const tunnel = tunnelGeometry.init();
   tubeLines = tunnel.tubeLines;
   scene.add(tubeLines);
 
-  // Initialize scene objects
+  // SCENE OBJECTS
   const objects = sceneObjects.init(tunnel.curvePath, 0.5, loadedTextures);
   objects.movingObjects.forEach((obj) => scene.add(obj));
   objects.neonPlanes.forEach((plane) => scene.add(plane));
   scene.add(objects.particleSystem);
 
-  // Initialize camera controller
+  // CAMERA CONTROLLER
   cameraController = new CameraController(camera, tunnel.curvePath);
   cameraController.init();
 
@@ -133,35 +133,30 @@ function animate() {
 
   hue = (elapsed * 0.1) % 1;
 
-  // Update camera and get speed info
   cameraController.update();
   const speedBoost = cameraController.getSpeedBoost();
   const lightness = 0.6 + speedBoost;
 
-  // Update tube lines color
   if (tubeLines) {
     tubeLines.material.color.setHSL(hue, 1.0, lightness);
   }
 
-  // Update object colors and animations
   sceneObjects.updateColors(hue, lightness);
   sceneObjects.animateMovingObjects();
   sceneObjects.animateNeonPlanes(camera);
 
-  // Update post-processing effects
   postProcessingManager.updateBlurStrength(cameraController.getBlurStrength());
 
-  // Audio-based effects
   if (audioManager.analyser) {
     const bassLevel = audioManager.getBassLevel();
     const midLevel = audioManager.getMidLevel();
 
-    // RGB shift aberration effect
+    // RGB SHIFT
     const rgbAmount = 0.001 + (bassLevel > 0.1 ? bassLevel * 0.005 : 0);
     const rgbAngle = elapsed * 8;
     postProcessingManager.updateRGBShift(rgbAmount, rgbAngle);
 
-    // Apply audio effects to scene objects
+    // AUDIO EFFECTS
     sceneObjects.applyAudioEffects(midLevel);
   }
 
