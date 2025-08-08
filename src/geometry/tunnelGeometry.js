@@ -29,14 +29,14 @@ export class TunnelGeometry {
   }
 
   getTubeFrame(path, u, normal, binormal) {
-    const epsilon = 0.0001;
+    const epsilon = 0.001;
     const tangent = path.getTangentAt(u);
 
     const nextU = (u + epsilon) % 1;
     const nextTangent = path.getTangentAt(nextU);
 
     binormal.crossVectors(tangent, nextTangent).normalize();
-    if (binormal.lengthSq() === 0) {
+    if (binormal.lengthSq() < 0.0001) {
       binormal.set(0, 0, 1); // fallback
     }
     normal.crossVectors(binormal, tangent).normalize();

@@ -17,7 +17,7 @@ export class CameraController {
   setupScrollControl() {
     window.addEventListener("wheel", (event) => {
       const now = performance.now();
-      if (now - this.lastTime < 50) return;
+      if (now - this.lastTime < 16) return;
       this.lastTime = now;
 
       const deltaSpeed = MathUtils.clamp(event.deltaY * 0.0001, -0.1, 0.1);
@@ -28,7 +28,7 @@ export class CameraController {
 
   update() {
     const targetP = this.scrollProgress;
-    this.currentP += (targetP - this.currentP) * 0.02;
+    this.currentP += (targetP - this.currentP) * 0.05;
 
     const pos = this.curvePath.getPoint(this.currentP % 1);
     const lookAt = this.curvePath.getPoint((this.currentP + 0.01) % 1);
